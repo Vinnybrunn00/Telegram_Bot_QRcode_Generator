@@ -3,7 +3,7 @@ import telebot
 import qrcode
 import time
 
-token = '5389232508:AAFFBeHEkr41pQTpxfDI8OT5s16jSEdqDsk'
+token = 'Your BotFather token'
 bot = telebot.TeleBot(token)
 
 def QRCode(message):
