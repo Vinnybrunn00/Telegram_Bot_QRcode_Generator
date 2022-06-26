@@ -3,7 +3,7 @@ import telebot
 import qrcode
 import time
 
-token = 'Your BotFather token'
+token = '5389232508:AAFFBeHEkr41pQTpxfDI8OT5s16jSEdqDsk'
 bot = telebot.TeleBot(token)
 
 def QRCode(message):
@@ -20,8 +20,23 @@ def QRCode(message):
 					site = requests.get(input)
 					if site.status_code == 200:
 						bot.reply_to(message, 'Aguarde...')
-						img = qrcode.make(input)
+
+						qr = qrcode.QRCode(
+							version=1, 
+							error_correction=qrcode.constants.ERROR_CORRECT_L,
+							box_size=10,
+							border=4
+							)
+
+						qr.add_data(input)
+						qr.make(fit=True)
+
+						img = qr.make_image(
+							fill_color='black',
+							back_color='white'
+							)
 						img.save('QRCODE.png')
+
 						time.sleep(1.5)
 						imagem = open('QRCODE.png', 'rb')
 						bot.send_photo(message.chat.id, imagem)
@@ -31,7 +46,7 @@ def QRCode(message):
 								)
 				except:
 					bot.send_message(message.chat.id, 
-						f'404 - "{message.text}" - não encontrado'
+						f'"{message.text}" - não encontrado'
 							)
 			else:
 				bot.send_message(message.chat.id, 
